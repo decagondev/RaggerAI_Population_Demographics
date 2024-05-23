@@ -8,6 +8,8 @@ from note_engine import note_engine
 from llama_index.tools import QueryEngineTool, ToolMetadata
 from llama_index.agent import ReActAgent
 from llama_index.llms import openai
+from pdf import canada_engine, usa_engine, england_engine
+
 load_dotenv()
 
 population_path = os.path.join("data", "population.csv")
@@ -24,7 +26,28 @@ tools = [
     QueryEngineTool(query_engine=population_query_engine, metadata=ToolMetadata(
         name="population_data",
         description="this gives information about the world population and demographics"
-    ))
+    )),
+    QueryEngineTool(
+        query_engine=canada_engine,
+        metadata=ToolMetadata(
+            name="canada_data",
+            description="this gives detailed information about canada the country",
+        ),
+    ),
+    QueryEngineTool(
+        query_engine=usa_engine,
+        metadata=ToolMetadata(
+            name="united_states_data",
+            description="this gives detailed information about united states the country",
+        ),
+    ),
+    QueryEngineTool(
+        query_engine=england_engine,
+        metadata=ToolMetadata(
+            name="england_data",
+            description="this gives detailed information about england the country",
+        ),
+    ),
 ]
 
 llm = openai(model="gpt-3.5-turbo")
